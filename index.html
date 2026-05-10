@@ -241,7 +241,7 @@
   </div>
 
   <div class="footer-row">
-    <span class="sticker">made with 💕</span>
+    <span class="sticker">made with araa 💕</span>
     <span class="sticker">Aura 🎂 2026</span>
     <span class="sticker">NCT Dream 🌙</span>
   </div>
@@ -281,14 +281,6 @@
     else              { audio.pause();               setPlaying(false); }
   }
   audio.addEventListener('ended', () => setPlaying(false));
-
-  /*
-   * AUTOPLAY SAAT SCROLL
-   * Browser membutuhkan "user gesture" sebelum audio bisa diplay.
-   * Scroll sudah dihitung sebagai gesture di Chrome/Edge/Firefox modern.
-   * Trik: kita unlock AudioContext dulu saat ada event apapun,
-   * lalu play saat scrapbook masuk viewport.
-   */
   let audioUnlocked = false;
   let hasPlayed = false;
 
