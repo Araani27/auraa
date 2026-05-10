@@ -123,19 +123,22 @@
     .heart { position: absolute; top: -30px; font-size: 18px; animation: fall linear infinite; opacity: 0; }
     @keyframes fall { 0% { transform: translateY(-30px) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.3; } 100% { transform: translateY(105vh) rotate(360deg); opacity: 0; } }
 
-    @media (max-width: 680px) {
-      .scrapbook { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 700px) {
+      body { padding: 24px 14px 60px; }
+      .scrapbook { grid-template-columns: 1fr; gap: 24px; }
+      .photo-card,
+      .photo-card:nth-child(1),
+      .photo-card:nth-child(3),
+      .photo-card:nth-child(4) { transform: rotate(0deg) !important; max-width: 100%; }
       .note-card { grid-column: 1 / -1; transform: rotate(0deg); }
-      .photo-card:nth-child(4) { grid-column: 1 / -1; max-width: 260px; margin: 0 auto; }
-    }
-    @media (max-width: 420px) {
-      .scrapbook { grid-template-columns: 1fr; }
-      .photo-card:nth-child(4) { max-width: 100%; }
-    }
-    @media (max-width: 520px) {
-      .fan-card { flex-direction: column; text-align: center; }
+      .photo-card[style] { grid-column: 1 / -1 !important; }
+      .photo-frame { height: 200px; }
+      .fan-card { flex-direction: column; text-align: center; transform: rotate(0deg); }
       .fan-card .fan-content { min-width: unset; }
       .lightstick { justify-content: center; }
+      .header { margin-bottom: 24px; }
+      .player-wrap { margin-bottom: 24px; }
+      .wish-card, .fan-card { transform: rotate(0deg) !important; }
     }
   </style>
 </head>
@@ -237,7 +240,7 @@
   </div>
 
   <div class="footer-row">
-    <span class="sticker">made with araa💕</span>
+    <span class="sticker">made with 💕</span>
     <span class="sticker">Aura 🎂 2026</span>
     <span class="sticker">NCT Dream 🌙</span>
   </div>
@@ -278,6 +281,13 @@
   }
   audio.addEventListener('ended', () => setPlaying(false));
 
+  /*
+   * AUTOPLAY SAAT SCROLL
+   * Browser membutuhkan "user gesture" sebelum audio bisa diplay.
+   * Scroll sudah dihitung sebagai gesture di Chrome/Edge/Firefox modern.
+   * Trik: kita unlock AudioContext dulu saat ada event apapun,
+   * lalu play saat scrapbook masuk viewport.
+   */
   let audioUnlocked = false;
   let hasPlayed = false;
 
